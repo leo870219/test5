@@ -1,25 +1,50 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import Log from "./components/Log";
+import Shape from "./components/Shape";
+import Upload from "./components/Upload";
+class App extends React.Component {
+  state = {
+    shape: "upload-square",
+    updateLog: "",
+  };
+  changeShape = (shape) => {
+    if(shape ==='upload-round'){
+      this.setState({
+        shape: shape,
+        updateLog: `${this.state.updateLog}更改圓形>`,
+      });
+    }else{
+      this.setState({
+        shape: shape,
+        updateLog: `${this.state.updateLog}更改方形>`,
+      });
+    }
+   
+  };
+  changeImg = (image) => {
+    this.setState({
+      updateLog: this.state.updateLog + image,
+    });
+  };
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  render() {
+    return (
+      <div className="container">
+        <Upload
+          shape={this.state.shape}
+          changeImg={(image) => {
+            this.changeImg(image);
+          }}
+        />
+        <Shape
+          changeShape={(item) => {
+            this.changeShape(item);
+          }}
+        />
+        <Log log={this.state.updateLog} />
+      </div>
+    );
+  }
 }
 
 export default App;
